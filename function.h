@@ -4,12 +4,12 @@ void displayMainMenu();
 
 // Function prototypes for book management
 void displayBookMenu();
-void displayBooks(book book[], int bookCount);
-void addBook(book book[], int *bookCount);
+void bookManagementMenu(book b,book book[], int *bookCount, const char *fileName);
+void addBook(book books[], int *bookCount,const char *fileName);
 void editBook(book book[],int bookCount);
 void deleteBook(book book[], int *bookCount);
-void searchBookByName();
-void sortBooksByPrice();
+void searchBookByName(book book[], int bookCount);
+void sortBookByPrice(book bookTmp,book book[], int bookCount);
 void saveBooksToFile();
 
 

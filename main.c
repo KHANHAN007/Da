@@ -3,8 +3,10 @@
 
 int main()
 {
+	const char *fileName="dataLibrary.dat";
+	book b; 
 	book book[100];
-	int bookCount=0;
+	int bookCount=countBooksInFile(fileName);
 	int choice;
 	do
 	{
@@ -13,7 +15,7 @@ int main()
 		switch(choice)
 		{
 			case 1:
-				bookManagementMenu(book, &bookCount);
+				bookManagementMenu(b, book, &bookCount, fileName);
 				break;
 		}
 	}while(choice !=0);
