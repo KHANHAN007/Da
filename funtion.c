@@ -44,10 +44,12 @@ void bookManagementMenu(book book[], int *bookCount)
         	case 3:
         		editBook(book, *bookCount);
         		break;
+        	case 4:
+        		deleteBook(book, bookCount);
+        		break;
 		}
 	}while(choice !=0);
 }
-
 //display book
 void displayBooks(book book[], int bookCount)
 {
@@ -70,7 +72,7 @@ void displayBooks(book book[], int bookCount)
 	int i;
 	for (i = 0; i < bookCount; ++i) 
 	{
-       	printf("| %-6s | %-25s | %-20s | %-8d | %-10d | %02d/%02d/%4d |\n", 
+       	printf("| %-6s | %-25s | %-20s | %-8d | %-10d | %02d/%02d/%4d  |\n", 
                book[i].bookId, book[i].title, book[i].author, 
                book[i].price, book[i].quantity, 
                book[i].publication.day, book[i].publication.month, book[i].publication.year);
@@ -157,7 +159,10 @@ void editBook(book book[], int bookCount)
 	}
 	if(found==-1)
 	{
+		getchar();
 		printf("Book with ID '%s' does not exist.\n", editID);
+		printf("\n--- Press any key to go back ---\n"); 
+		getchar();
 		return;
 	}
 	printf("\nCurrent details of the book:\n");
@@ -192,4 +197,58 @@ void editBook(book book[], int bookCount)
         &book[found].publication.year);
     getchar();
     displayBooks(book,bookCount);
+}
+//delete book
+void deleteBook(book book[], int *bookCount)
+{
+	if (*bookCount==0)
+	{
+		getchar(); 
+		printf("\n\t*** Edit Book ***\n");
+		printf("\t   Empty list\n");
+		printf("--- Press any key to go back ---\n"); 
+		getchar(); 
+		return;
+	}
+	char deleteID[10];
+	int found=-1;
+	printf("\n\t*** Delete Book ***\n");
+	printf("Enter the book ID want to delete: ");
+	scanf("%s", deleteID);
+	
+	int i;
+	for(i=0;i<*bookCount;++i)
+	{
+		if(strcmp(book[i].bookId,deleteID)==0)
+		{
+			found=i;
+			break;
+		}
+	}
+	if(found==-1)
+	{
+		getchar();
+		printf("Book with ID '%s' does not exist.\n", deleteID);
+		printf("\n--- Press any key to go back ---\n"); 
+		getchar();
+		return;
+	}
+	char choiceDelete;
+	getchar();
+	printf("Do you want to delete the book with %s ID?(Y/N)\nEnter your choice: ");
+	scanf("%c", &choiceDelete);
+	if(choiceDelete == 'N' || choiceDelete == 'n')
+	{
+		getchar();
+		printf("\n--- You do not delete ---\n");
+		printf("\n--- Press any key to go back ---\n"); 
+		getchar();
+		return;
+	}
+	for(i=found; i<*bookCount;++i)
+	{
+		book[i]=book[i+1];
+	}
+	(*bookCount)--;
+	printf("Book deleted successfully!\n");
 }
