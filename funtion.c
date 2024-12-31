@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "function.h"
 
 //Main menu
@@ -35,9 +36,11 @@ void bookManagementMenu(book bookTmp,book book[], int *bookCount, const char *fi
         switch (choice)
         {
         	case 1:
+        		system("cls");
         		displayBooks(book, *bookCount);
         		break;
         	case 2:
+        		system("cls");
         		addBook(book, bookCount, fileName);
         		break;
         	case 3:
@@ -340,56 +343,62 @@ void sortBookByPrice(book bookTmp,book book[], int bookCount)
     }
 }
 //read file
-void readBooksFromFile(book books[], int *bookCount, const char *filename)
-{
-    FILE *file = fopen(filename, "r");
-    if (!file)
-    {
-        printf("Error: Could not open file '%s' for reading.\n", filename);
-        return;
-    }
-    *bookCount = 0;
-    while (fscanf(file, "%s %[^\n] %f", books[*bookCount].bookId, books[*bookCount].title, &books[*bookCount].price) != EOF)
-    {
-        (*bookCount)++;
-    }
-    fclose(file);
-    printf("Books loaded successfully from file '%s'.\n", filename);
-}
+//void readBooksFromFile(book books[], int *bookCount, const char *filename)
+//{
+//    FILE *file = fopen(filename, "r");
+//    if (!file)
+//    {
+//        printf("Error: Could not open file '%s' for reading.\n", filename);
+//        return;
+//    }
+//    *bookCount = 0;
+//    while (fscanf(file, "%s %[^\n] %[^\n] %d %d %d %d %d", 
+//			books[*bookCount].bookId, books[*bookCount].title, books[*bookCount].author, 
+//            books[*bookCount].price, books[*bookCount].quantity, 
+//            books[*bookCount].publication.day, books[*bookCount].publication.month, books[*bookCount].publication.year) != EOF)
+//    {
+//        (*bookCount)++;
+//    }
+//    fclose(file);
+//    printf("Books loaded successfully from file '%s'.\n", filename);
+//}
 //write file
-void writeBooksToFile(book books[], int bookCount, const char *filename)
-{
-    FILE *file = fopen(filename, "w");
-    if (!file)
-    {
-        printf("Error: Could not open file '%s' for writing.\n", filename);
-        return;
-    }
-    int i;
-    for (i = 0; i < bookCount; i++)
-    {
-        fprintf(file, "%s,%s,%.2f\n", books[i].bookId, books[i].title, books[i].price);
-    }
-    fclose(file);
-    printf("Books saved successfully to file '%s'.\n", filename);
-}
+//void writeBooksToFile(book books[], int bookCount, const char *filename)
+//{
+//    FILE *file = fopen(filename, "w");
+//    if (!file)
+//    {
+//        printf("Error: Could not open file '%s' for writing.\n", filename);
+//        return;
+//    }
+//    int i;
+//    for (i = 0; i < bookCount; i++)
+//    {
+//        fprintf(file, "%s %[^\n] %[^\n] %d %d %d %d %d", 
+//			books[bookCount].bookId, books[bookCount].title, books[bookCount].author, 
+//            books[bookCount].price, books[bookCount].quantity, 
+//            books[bookCount].publication.day, books[bookCount].publication.month, books[bookCount].publication.year);
+//    }
+//    fclose(file);
+//    printf("Books saved successfully to file '%s'.\n", filename);
+//}
 //count book 
-int countBooksInFile(const char *fileName)
-{
-    FILE *file = fopen(fileName, "r");
-    if (!file)
-    {
-        printf("File not found.\n");
-        return 0;
-    }
-
-    int count = 0;
-    char buffer[256];
-    while (fgets(buffer, sizeof(buffer), file))
-    {
-        count++;
-    }
-    fclose(file);
-    return count / 7;
-}
+//int countBooksInFile(const char *fileName)
+//{
+//    FILE *file = fopen(fileName, "r");
+//    if (!file)
+//    {
+//        printf("File not found.\n");
+//        return 0;
+//    }
+//
+//    int count = 0;
+//    char buffer[256];
+//    while (fgets(buffer, sizeof(buffer), file))
+//    {
+//        count++;
+//    }
+//    fclose(file);
+//    return count / 7;
+//}
 

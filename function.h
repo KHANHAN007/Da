@@ -1,4 +1,5 @@
 #include "dataType.h"
+#include <stdlib.h>
 
 void displayMainMenu();
 
