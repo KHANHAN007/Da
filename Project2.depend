@@ -1,17 +1,17 @@
 # depslib dependency file v1.0
-1735764852 source:d:\rkei_c\project\funtion.c
+1735860522 source:d:\rkei_c\project\funtion.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"function.h"
 
-1735764852 d:\rkei_c\project\function.h
+1735860548 d:\rkei_c\project\function.h
 	"dataType.h"
 
-1735596620 d:\rkei_c\project\datatype.h
+1735859328 d:\rkei_c\project\datatype.h
 	<stdbool.h>
 
-1735760169 source:d:\rkei_c\project\main.c
+1735860548 source:d:\rkei_c\project\main.c
 	<stdio.h>
 	<stdlib.h>
 	"function.h"

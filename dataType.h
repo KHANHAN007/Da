@@ -25,3 +25,8 @@ struct member
 	bool status;
 	book borrowedBooks[];
 };
+typedef struct member customer;
+typedef struct {
+    char username[50];
+    char password[50];
+} Admin;
