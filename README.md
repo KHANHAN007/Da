@@ -1,3 +1,3 @@
-usedname: anlinh
+username: anlinh
 
-passworld: 21040301
+password: 21040301
