@@ -10,8 +10,7 @@ int main() {
         printf("Exiting program.\n");
         return 0;
     }
-    printf("Welcome to the program!\n");
-
+    Sleep(2000);
     const char *fileName1 = "dataLibrary.dat";
     const char *fileName2 = "customers.dat";
 
@@ -37,6 +36,10 @@ int main() {
                 displayCustomerMenu(customers, &customerCount,
                          books, &bookCount,
                          fileName2, fileName1);
+                break;
+            case 3:
+                system("cls");
+                updateAdminCredentials(adminFileName);
                 break;
             case 0:
                 printf("Exiting the program...\n");
