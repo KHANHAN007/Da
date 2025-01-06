@@ -1,2 +1,3 @@
-usedname: anlinh\n
+usedname: anlinh
+
 passworld: 21040301
