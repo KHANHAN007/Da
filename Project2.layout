@@ -2,14 +2,24 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="default" />
-	<File name="main.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="7" zoom_2="0">
+	<File name="function.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="dataType.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="12" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="263" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="7" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="501" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="funtion.c" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="8" zoom_2="0">
+	<File name="funtion.c" open="1" top="1" tabpos="5" split="0" active="1" splitpos="0" zoom_1="8" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="103" topLine="0" />
+			<Cursor1 position="22393" topLine="9" />
 		</Cursor>
 		<Folding>
 			<Collapse line="7" />
@@ -22,36 +32,26 @@
 			<Collapse line="434" />
 			<Collapse line="501" />
 			<Collapse line="524" />
-			<Collapse line="545" />
-			<Collapse line="609" />
-			<Collapse line="636" />
-			<Collapse line="712" />
-			<Collapse line="792" />
-			<Collapse line="833" />
-			<Collapse line="866" />
-			<Collapse line="967" />
-			<Collapse line="1040" />
-			<Collapse line="1052" />
-			<Collapse line="1067" />
-			<Collapse line="1084" />
-			<Collapse line="1099" />
-			<Collapse line="1114" />
-			<Collapse line="1129" />
+			<Collapse line="544" />
+			<Collapse line="608" />
+			<Collapse line="635" />
+			<Collapse line="711" />
+			<Collapse line="791" />
+			<Collapse line="832" />
+			<Collapse line="865" />
+			<Collapse line="966" />
+			<Collapse line="1039" />
+			<Collapse line="1051" />
+			<Collapse line="1065" />
+			<Collapse line="1082" />
+			<Collapse line="1097" />
+			<Collapse line="1112" />
+			<Collapse line="1127" />
 		</Folding>
 	</File>
-	<File name="dataLibrary.dat" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="20" zoom_2="0">
+	<File name="dataLibrary.dat" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="20" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="277" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="dataType.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="12" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="263" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="function.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -535,7 +535,6 @@ void writeBooksToFile(book books[], int bookCount, const char *filename) {
                 books[i].publication.day, books[i].publication.month, books[i].publication.year);
     }
     fclose(file);
-    printf("Books saved successfully to file '%s'.\n", filename);
 }
 
 
@@ -1059,7 +1058,6 @@ void writeCustomersToFile(customer customers[], int customerCount, const char *f
 
     fwrite(customers, sizeof(customer), customerCount, file);
     fclose(file);
-    printf("Saved %d customers to the file.\n", customerCount);
 }
 
 
