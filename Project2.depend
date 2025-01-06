@@ -16,7 +16,7 @@
 	<stdlib.h>
 	"function.h"
 
-1736142957 source:c:\users\khanh\downloads\dang_khanh_an_c_project-main\dang_khanh_an_c_project-main\funtion.c
+1736174685 source:c:\users\khanh\downloads\dang_khanh_an_c_project-main\dang_khanh_an_c_project-main\funtion.c
 	<stdio.h>
 	<ctype.h>
 	<stdlib.h>
@@ -26,10 +26,10 @@
 1736143576 c:\users\khanh\downloads\dang_khanh_an_c_project-main\dang_khanh_an_c_project-main\function.h
 	"dataType.h"
 
-1736127276 c:\users\khanh\downloads\dang_khanh_an_c_project-main\dang_khanh_an_c_project-main\datatype.h
+1736172341 c:\users\khanh\downloads\dang_khanh_an_c_project-main\dang_khanh_an_c_project-main\datatype.h
 	<stdbool.h>
 
-1736116315 source:c:\users\khanh\downloads\dang_khanh_an_c_project-main\dang_khanh_an_c_project-main\main.c
+1736173491 source:c:\users\khanh\downloads\dang_khanh_an_c_project-main\dang_khanh_an_c_project-main\main.c
 	<stdio.h>
 	<stdlib.h>
 	"function.h"

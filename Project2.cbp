@@ -12,14 +12,11 @@
 				<Option compiler="gcc" />
 			</Target>
 		</Build>
-		<Unit filename="admin.dat" />
 		<Unit filename="dataLibrary.dat" />
 		<Unit filename="dataType.h">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="function.h">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="function.h" />
 		<Unit filename="funtion.c">
 			<Option compilerVar="CC" />
 		</Unit>

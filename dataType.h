@@ -23,7 +23,7 @@ struct member
 	char name[20];
 	char phone[10];
 	bool status;
-	book borrowedBooks[];
+	book borrowedBooks[5];
 };
 typedef struct member customer;
 typedef struct {

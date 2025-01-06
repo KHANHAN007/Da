@@ -21,7 +21,6 @@ void bookManagementMenu(book bookTmp, book book[], int *bookCount, const char *f
     int choice;
     do {
         system("cls");
-        readBooksFromFile(book, bookCount, fileName);
         printf("\n\t*** Book Management ***\n");
         printf("=======================\n");
         printf("[1] Display Books\n");
@@ -73,7 +72,6 @@ void bookManagementMenu(book bookTmp, book book[], int *bookCount, const char *f
 void displayBooks(book book[], int bookCount) {
     getchar();
     if (bookCount == 0) {
-        getchar();
         printf("\n\t*** Display Books ***\n");
         printf("==========================================\n");
         printf("\t\tEmpty list\n");
@@ -106,7 +104,6 @@ void addBook(book books[], int *bookCount, const char *fileName) {
     printf("Enter the number of books to add: ");
     scanf("%d", &numBooksToAdd);
     getchar();
-
     for (int i = 0; i < numBooksToAdd; i++) {
         char tempTitle[100], tempAuthor[100];
         int tempQuantity, tempPrice;
@@ -158,9 +155,8 @@ void addBook(book books[], int *bookCount, const char *fileName) {
         } while (!isValid);
         do {
             printf("Enter author (max 99 characters): ");
-            scanf(" %[^\n]", tempAuthor);
-            getchar();
-
+            fgets(tempAuthor, sizeof(tempAuthor), stdin);
+            tempAuthor[strcspn(tempAuthor, "\n")] = 0;
             if (strlen(tempAuthor) == 0) {
                 printf("Error: Author cannot be empty.\n");
             }
@@ -185,7 +181,6 @@ void addBook(book books[], int *bookCount, const char *fileName) {
             printf("Enter publication date (dd mm yyyy): ");
             scanf("%d %d %d", &tempPublication.day, &tempPublication.month, &tempPublication.year);
             getchar();
-
             if (tempPublication.day <= 0 || tempPublication.day > 31 ||
                 tempPublication.month <= 0 || tempPublication.month > 12 ||
                 tempPublication.year < 1000 || tempPublication.year > 9999) {
@@ -504,27 +499,27 @@ void sortBookByPrice(book books[], int bookCount) {
     getchar();
 }
 //read file
-void readBooksFromFile(book books[], int *bookCount, const char *fileName) {
-    *bookCount = 0;
-
-    FILE *file = fopen(fileName, "r");
-    if (file == NULL) {
-        printf("Error: Could not open file '%s' for writing.\n", fileName);
+void readBooksFromFile(book books[], int *bookCount, const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        printf("Error: Could not open file '%s' for reading.\n", filename);
         return;
     }
 
-    while (fscanf(file, "%s %s %s %d %d %d/%d/%d",
+    while (fscanf(file, "%99[^;];%99[^;];%99[^;];%d;%d;%d/%d/%d\n",
                   books[*bookCount].bookId,
                   books[*bookCount].title,
                   books[*bookCount].author,
-                  &books[*bookCount].quantity,
                   &books[*bookCount].price,
+                  &books[*bookCount].quantity,
                   &books[*bookCount].publication.day,
                   &books[*bookCount].publication.month,
                   &books[*bookCount].publication.year) == 8) {
         (*bookCount)++;
     }
+
     fclose(file);
+    printf("Books read successfully from file '%s'.\n", filename);
 }
 //write file
 void writeBooksToFile(book books[], int bookCount, const char *filename) {
@@ -534,7 +529,7 @@ void writeBooksToFile(book books[], int bookCount, const char *filename) {
         return;
     }
     for (int i = 0; i < bookCount; i++) {
-        fprintf(file, "%s %s %s %d %d %02d/%02d/%04d\n",
+        fprintf(file, "%s;%s;%s;%d;%d;%02d/%02d/%04d\n",
                 books[i].bookId, books[i].title, books[i].author,
                 books[i].price, books[i].quantity,
                 books[i].publication.day, books[i].publication.month, books[i].publication.year);
@@ -542,6 +537,7 @@ void writeBooksToFile(book books[], int bookCount, const char *filename) {
     fclose(file);
     printf("Books saved successfully to file '%s'.\n", filename);
 }
+
 
 
 
@@ -619,17 +615,22 @@ void displayCustomers(customer customers[], int customerCount) {
         return;
     }
     printf("\n======= Customer List =======\n");
-    printf("+------------+--------------------------------------------------+-----------------+----------+\n");
-    printf("| %-10s | %-48s | %-15s | %-8s |\n", "ID", "Name", "Phone", "Status");
-    printf("+------------+--------------------------------------------------+-----------------+----------+\n");
+    printf("+------------+--------------------------------------------------+-----------------+----------+-----------------+\n");
+    printf("| %-10s | %-48s | %-15s | %-8s | %-15s |\n", "ID", "Name", "Phone", "Status", "Books Borrowed");
+    printf("+------------+--------------------------------------------------+-----------------+----------+-----------------+\n");
     for (int i = 0; i < customerCount; i++) {
-        printf("| %-10s | %-48s | %s      | %-8s |\n",
+    int borrowedCount = 0;
+        for (int j = 0; j < 5; j++) {
+        borrowedCount += customers[i].borrowedBooks[j].quantity;
+        }
+        printf("| %-10s | %-48s | %s      | %-8s | %-15d |\n",
                customers[i].memberId,
                customers[i].name,
                customers[i].phone,
-               customers[i].status == 0 ? "Active" : "Locked");
+               customers[i].status == 0 ? "Active" : "Locked",
+               borrowedCount);
     }
-    printf("+------------+--------------------------------------------------+-----------------+----------+\n");
+    printf("+------------+--------------------------------------------------+-----------------+----------+-----------------+\n");
     printf("\n--- Press any key to go back ---\n");
     getchar();
 }
@@ -700,6 +701,9 @@ void addCustomer(customer customers[], int *customerCount) {
         }
     } while (!isValid);
     newCustomer.status = 0;
+    for (int i = 0; i < 5; i++) {
+        newCustomer.borrowedBooks[i].quantity = 0;
+    }
     customers[*customerCount] = newCustomer;
     (*customerCount)++;
     printf("Customer added successfully.\n");
@@ -861,7 +865,7 @@ void searchCustomerByName(customer customers[], int customerCount) {
     getchar();
 }
 void borrowBook(customer customers[], int customerCount, book books[], int bookCount) {
-        if (customerCount == 0) {
+    if (customerCount == 0) {
         printf("\n--- No customers available ---\n");
         printf("\n--- Press any key to go back ---\n");
         getchar();
@@ -871,8 +875,9 @@ void borrowBook(customer customers[], int customerCount, book books[], int bookC
     printf("=========================\n");
     char customerId[10];
     printf("Enter customer ID to borrow books: ");
-    scanf("%s", customerId);
-    getchar();
+    fgets(customerId, sizeof(customerId), stdin);
+    customerId[strcspn(customerId, "\n")] = 0;
+
     int customerIndex = -1;
     for (int i = 0; i < customerCount; i++) {
         if (strcmp(customers[i].memberId, customerId) == 0) {
@@ -892,23 +897,21 @@ void borrowBook(customer customers[], int customerCount, book books[], int bookC
         getchar();
         return;
     }
-    /*int borrowedCount = 0;
-for (int i = 0; i < 100; i++) {
-    if (customers[customerIndex].borrowedBooks[i].quantity > 0) {
-                printf("%d\n",borrowedCount);
-        borrowedCount++;
+    int borrowedCount = 0;
+    for (int j = 0; j < 5; j++) {
+        borrowedCount += customers[customerIndex].borrowedBooks[j].quantity;
     }
-}
     if (borrowedCount >= 5) {
         printf("Customer has already borrowed 5 books, cannot borrow more.\n");
         printf("\n--- Press any key to go back ---\n");
         getchar();
         return;
-    }*/
+    }
     char bookId[10];
     printf("Enter book ID to borrow: ");
-    scanf("%s", bookId);
-    getchar();
+    fgets(bookId, sizeof(bookId), stdin);
+    bookId[strcspn(bookId, "\n")] = 0;
+
     int bookIndex = -1;
     for (int i = 0; i < bookCount; i++) {
         if (strcmp(books[i].bookId, bookId) == 0) {
@@ -924,29 +927,46 @@ for (int i = 0; i < 100; i++) {
     }
     int quantity;
     printf("Enter quantity to borrow: ");
-    scanf("%d", &quantity);
-    getchar();
+    if (scanf("%d", &quantity) != 1) {
+        printf("Invalid input! Please enter a valid number.\n");
+        while(getchar() != '\n');
+        printf("\n--- Press any key to go back ---\n");
+        getchar();
+        return;
+    }
     if (quantity > books[bookIndex].quantity) {
         printf("Not enough books in the library!\n");
         printf("\n--- Press any key to go back ---\n");
         getchar();
         return;
     }
-    for (int i = 0; i < 100; i++) {
-        if (strlen(customers[customerIndex].borrowedBooks[i].bookId) == 0) {
+    int borrowedSlotFound = 0;
+    for (int i = 0; i < 5; i++) {
+        if (customers[customerIndex].borrowedBooks[i].quantity == 0) {
             strcpy(customers[customerIndex].borrowedBooks[i].bookId, books[bookIndex].bookId);
             strcpy(customers[customerIndex].borrowedBooks[i].title, books[bookIndex].title);
             customers[customerIndex].borrowedBooks[i].quantity = quantity;
             books[bookIndex].quantity -= quantity;
             printf("Book(s) borrowed successfully!\n");
-            printf("\n--- Press any key to go back ---\n");
-            getchar();
-            return;
+            borrowedSlotFound = 1;
+            break;
+        } else if (strcmp(customers[customerIndex].borrowedBooks[i].bookId, books[bookIndex].bookId) == 0) {
+            customers[customerIndex].borrowedBooks[i].quantity += quantity;
+            books[bookIndex].quantity -= quantity;
+            printf("Book(s) borrowed successfully! Updated quantity.\n");
+            borrowedSlotFound = 1;
+            break;
         }
     }
+    if (!borrowedSlotFound) {
+        printf("Unable to borrow more books. Please make space by returning some books.\n");
+    }
+    getchar();
+    printf("\n--- Press any key to go back ---\n");
+    getchar();
 }
 void returnBook(customer customers[], int customerCount, book books[], int bookCount) {
-        if (customerCount == 0) {
+    if (customerCount == 0) {
         printf("\n--- No customers available ---\n");
         printf("\n--- Press any key to go back ---\n");
         getchar();
@@ -967,6 +987,16 @@ void returnBook(customer customers[], int customerCount, book books[], int bookC
     }
     if (customerIndex == -1) {
         printf("Customer not found!\n");
+        printf("\n--- Press any key to go back ---\n");
+        getchar();
+        return;
+    }
+    int borrowedCount = 0;
+    for (int i = 0; i < 5; i++) {
+        borrowedCount += customers[customerIndex].borrowedBooks[i].quantity;
+    }
+    if (borrowedCount == 0) {
+        printf("Customer has not borrowed any books!\n");
         printf("\n--- Press any key to go back ---\n");
         getchar();
         return;
